@@ -1,4 +1,3 @@
-row = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+num = "01AF"
 
-print(row[:5])
-print(row[4:])
+print(int(num, 16))
