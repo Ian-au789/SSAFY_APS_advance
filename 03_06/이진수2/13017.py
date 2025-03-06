@@ -9,19 +9,33 @@ for t in range(1, T+1):
     N = float(input())
 
     result = ""
-    n = -1
+    # n = -1
+    #
+    # while N > 0:
+    #     if N >= 2 ** n:
+    #         N -= 2 ** n
+    #         result += "1"
+    #
+    #     else:
+    #         result += "0"
+    #
+    #     n -= 1
+    #
+    #     if len(result) > 13:
+    #         result = "overflow"
+    #         break
 
     while N > 0:
-        if N >= 2 ** n:
-            N -= 2 ** n
+        N *= 2
+
+        if N >= 1:
+            N -= 1
             result += "1"
 
         else:
             result += "0"
 
-        n -= 1
-
-        if len(result) > 13:
+        if len(result) == 13:
             result = "overflow"
             break
 

@@ -1,3 +1,3 @@
-num = "01AF"
+num = 0.625
 
-print(int(num, 16))
+print(bin(num))
