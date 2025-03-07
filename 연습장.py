@@ -1,3 +1,3 @@
-num = 0.625
-
-print(bin(num))
+li = [1, 2, 3, 4, 5]
+result = "".join(map(str, li))
+print(result)
