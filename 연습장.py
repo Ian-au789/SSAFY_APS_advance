@@ -1,3 +1,4 @@
-li = [1, 2, 3, 4, 5]
-result = "".join(map(str, li))
-print(result)
+from itertools import permutations
+
+ll = [1, 2, 3, 4]
+print()
