@@ -1,4 +1,1 @@
-from itertools import permutations
-
-ll = [1, 2, 3, 4]
-print()
+print(int(0.37 * 9))
