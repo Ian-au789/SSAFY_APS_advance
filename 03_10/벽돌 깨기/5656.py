@@ -1,6 +1,5 @@
 import sys
 sys.stdin = open("sample_input.txt")
-from copy import deepcopy
 
 
 '''
@@ -67,7 +66,7 @@ def bricks_left(number, bricks):
                 continue
 
             else:
-                new_bricks = deepcopy(bricks)
+                new_bricks = [row[:] for row in bricks]
                 break_brick(i, idx, new_bricks[i][idx], new_bricks)     # 벽돌에 부딪히면 벽돌 깨기
 
                 # 스택을 써서 남은 벽돌을 아래로 떨어뜨리기
