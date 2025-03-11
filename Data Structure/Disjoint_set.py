@@ -39,3 +39,7 @@ union(2, 3)
 
 print(p)
 print(rank)
+
+print(find_set(1))
+print(find_set(2))
+print(find_set(7))
