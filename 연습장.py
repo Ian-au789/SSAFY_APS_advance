@@ -2,7 +2,7 @@
 #     N = int(input())
 #     matrix = [list(map(int, input().split())) for _ in range(N)]
 
-from itertools import permutations
+li = [1, 2, 3, 4, 5]
+pi = set(li)
 
-areas = [1, 2, 3, 4, 5]
-print(list(permutations(areas)))
+print(pi)
