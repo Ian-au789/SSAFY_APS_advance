@@ -6,18 +6,20 @@ sys.stdin = open("input.txt")
 
 def tsp(size, dist):
     dp = [[float('inf')] * size for _ in range(1 << size)]
-    dp[1][0] = 0
+    dp[1][0] = 0             # 회사에서 시작
 
+    # mask는 지금까지의 경로를 표시, i는 내가 있는 현재 위치를 표시
     for mask in range(1, 1 << size):
         for i in range(size):
-            if dp[mask][i] == float('inf'):
+            if dp[mask][i] == float('inf'):    # 불가능한 경로
                 continue
 
             for j in range(size):
-                if not (mask & (1 << j)):
+                if not (mask & (1 << j)):      # 아직 방문하지 않은 고객
+                    # 아직 방문하지 않은 도시로 이동하면서 같은 경로를 다른 순서로 이동한 경우와 거리를 비교해서 최솟값 저장
                     dp[mask | (1 << j)][j] = min((dp[mask][i] + dist[i][j]), dp[mask | (1 << j)][j])
 
-    return min([dp[(1 << size) - 1][k] + dist[size][k] for k in range(1, size)])
+    return min([dp[(1 << size) - 1][k] + dist[size][k] for k in range(1, size)])   # 집으로 돌아가는 거리를 더해서 최종 경로의 최솟값 반환
 
 
 T = int(input())
