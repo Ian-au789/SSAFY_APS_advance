@@ -19,16 +19,20 @@ def solution(jobs):
 
         else:
             idx = 0
-            while jobs[idx][0] >= time and idx < len(jobs):
-                idx += 1
+            while jobs[idx][0] <= time and idx < len(jobs):
                 request = jobs[idx][0]
                 operation = jobs[idx][1]
                 heapq.heappush(waiting, [operation, request, idx])
+
+                idx += 1
 
                 if idx == len(jobs):
                     break
 
             time += waiting[0][0]
-            jobs.pop(idx)
+            jobs.pop(waiting[0][2])
 
     return time
+
+
+print(solution([[0, 3], [1, 9], [3, 5]]))
