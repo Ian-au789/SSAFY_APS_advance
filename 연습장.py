@@ -1,9 +1,8 @@
-size = 10
-car_in = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-parking_lot = [0] * size
+# for t in range(1, T+1):
+#     N = int(input())
+#     matrix = [list(map(int, input().split())) for _ in range(N)]
 
-idx = 0
-for car in car_in:
-    parking_lot[idx] = car
-    temp = car_in.pop(0)
-    print(temp)
+from itertools import permutations
+
+areas = [1, 2, 3, 4, 5]
+print(list(permutations(areas)))
