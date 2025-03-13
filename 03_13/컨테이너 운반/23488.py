@@ -5,29 +5,29 @@ sys.stdin = open("sample_input(3).txt")
 import heapq
 
 T = int(input())
-for t in range(1, T+1):
+for t in range(1, T + 1):
     N, M = map(int, input().split())
     cargo = list(map(int, input().split()))
     load = list(map(int, input().split()))
-    negative = [c * -1 for c in cargo]
+
+    # cargo 값을 음수로 바꿔서 힙으로 관리
+    negative = [-c for c in cargo]
     heapq.heapify(negative)
+
     weight = 0
     load.sort(reverse=True)
 
+    # load에 있는 트럭들에 대해서 처리
     for truck in load:
-        if len(negative) == 0:
-            break
-
-        while truck < -1 * negative[0]:
+        # 트럭의 무게보다 작은 화물이 없다면 더 이상 트럭을 채울 수 없음
+        while negative and truck < -negative[0]:
             heapq.heappop(negative)
 
-            if len(negative) == 0:
-                break
-
-        if len(negative) == 0:
+        if not negative:
             break
 
-        weight += -1 * negative[0]
+        # 가장 큰 화물 적재
+        weight += -negative[0]
         heapq.heappop(negative)
 
     print(f"#{t} {weight}")
