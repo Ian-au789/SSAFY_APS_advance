@@ -17,7 +17,7 @@ def solution(distance, rocks, n):
     path = []                # 최솟값 이하의 값들을 저장
 
     while 1:
-        min_dist = 1햣
+        min_dist = 1
         idx = 0
         chance = n
 
