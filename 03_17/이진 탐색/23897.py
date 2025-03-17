@@ -4,10 +4,10 @@ import sys
 sys.stdin = open("5207_input.txt")
 
 
-def bin_search(num):
-    global N
+def bin_search(num, size):
     start = 0
-    end = N - 1
+    end = size - 1
+    direction = 0
 
     while start <= end:
         mid = (start + end) // 2
@@ -17,8 +17,14 @@ def bin_search(num):
 
         elif N_list[mid] > num:
             end = mid - 1
+            if direction == "left":
+                return 0
+            direction = "left"
         else:
             start = mid + 1
+            if direction == "right":
+                return 0
+            direction = "right"
 
     return 0
 
@@ -31,6 +37,6 @@ for t in range(1, T+1):
 
     result = 0
     for m in M_list:
-        result += bin_search(m)
+        result += bin_search(m, N)
 
     print(f"#{t} {result}")
