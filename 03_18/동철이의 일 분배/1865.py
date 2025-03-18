@@ -32,6 +32,5 @@ for t in range(1, T+1):
     employees = [i for i in range(N)]
     work = [list(map(int, input().split())) for _ in range(N)]
     result = 0
-
     dfs(0, [0]*N, 1, N)
     print(f"#{t} {result * 100:.6f}")
