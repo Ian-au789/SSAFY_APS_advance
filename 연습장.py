@@ -2,7 +2,5 @@
 #     N = int(input())
 #     matrix = [list(map(int, input().split())) for _ in range(N)]
 
-li = [1, 2, 3, 4, 5]
-pi = set(li)
-
-print(pi)
+hex = [[[0, 1] for __ in range(5)] for _ in range(4)]
+print(hex)
