@@ -18,13 +18,17 @@ def nuclear_reaction(atoms):
     while size > 0:
         cur_loc = []
         next_loc = []
+        # 현재 위치, 다음 위치 저장
         for atom in atoms:
-            cur_loc.append([atom[0], atom[1]])
-            next_loc.append([atom[0] + direction[atom[2]][0], atom[1] + direction[atom[2]][1]])
+            if atom[0] in range(-1000, 1001) and atom[1] in range(-1000, 1001):  # 범위을 벗어나면 제거
+                cur_loc.append([atom[0], atom[1]])
+                next_loc.append([atom[0] + direction[atom[2]][0], atom[1] + direction[atom[2]][1]])
+            else:
+                size -= 1
 
         collide = set()
-        ob = set()
 
+        # 충돌 확인
         for i in range(size):
             for j in range(i + 1, size):
                 if next_loc[i] == cur_loc[j]:
@@ -36,22 +40,19 @@ def nuclear_reaction(atoms):
                     collide.add(i)
                     collide.add(j)
 
-                if next_loc[i][0] < -1000 or next_loc[i][0] > 1000 or next_loc[i][1] < -1000 or next_loc[i][1] > 1000:
-                    ob.add(i)
-
         new_atoms = []
         for k in range(size):
             if k in collide:
                 energy += atoms[k][3]
 
-            elif k in ob:
-                continue
-
             else:
                 new_atoms.append([next_loc[k][0], next_loc[k][1], atoms[k][2], atoms[k][3]])
 
-        atoms = [row[:] for row in new_atoms]
-        size = len(atoms)
+        if len(new_atoms) > 0:
+            atoms = [row[:] for row in new_atoms]
+            size = len(atoms)
+        else:
+            break
 
     return energy
 
