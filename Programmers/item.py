@@ -1,67 +1,59 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/87694
 
 '''
-BFS 활용
-1. 내 현재 좌표가 어떤 사각형의 테두리 위에 있는지 확인.
-2. 델타 탐색을 통해 해당 사각형의 테두리 중에 이동 가능한 경우로 이동
-3. 만약 해당 좌표값이 2 (사각형 내부의 값) 이 되거나 양옆이 2라면 제거
+1. BFS를 써서 목표 지점까지 최단경로 확인
+2. 델타 탐색으로 다음 좌표가 사각형의 테두리에서만 움직이도록 함
+3. 해당 좌표가 속하는 사각형 테두리는 전부 탐색
+4. 만약 상자 내부에 들어가거나, 직사각형 한 변의 길이가 2라서 관통하지 않도록 제한
 '''
 
 from collections import deque
 
 
 def solution(rectangle, characterX, characterY, itemX, itemY):
-    cnt = 0
-    size = len(rectangle)
+    queue = deque()
+    queue.append([(characterX, characterY), 0])
+    visited = [[0]*51 for _ in range(51)]
+    di = [1, 0, -1, 0]
+    dj = [0, 1, 0, -1]
 
-    # matrix 크기 정하기
-    bound_i = []
-    bound_j = []
-    for rect in rectangle:
-        bound_i.append(rect[2])
-        bound_j.append(rect[3])
+    while queue:
+        cur_loc, level = queue.popleft()
+        visited[cur_loc[0]][cur_loc[1]] = 1
 
-    matrix = [[0] * (max(bound_j) + 2) for _ in range(max(bound_i) + 2)]
+        if cur_loc == (itemX, itemY):
+            break
 
-    # 직사각형 색칠하기 (테두리는 1, 내부는 2)
-    outlines = []
-    for rect in rectangle:
-        route = set()
-        for i in [rect[0], rect[2]]:
-            for j in range(rect[1], rect[3] + 1):
-                matrix[i][j] = 1
-                route.add((i, j))
+        for k in range(4):
+            next_loc = (cur_loc[0] + di[k], cur_loc[1] + dj[k])
 
-        for j in [rect[1], rect[3]]:
-            for i in range(rect[0], rect[2] + 1):
-                matrix[i][j] = 1
-                route.add((i, j))
+            if visited[next_loc[0]][next_loc[1]]:
+                continue
 
-        outlines.append(route)             # 각 직사각형의 테두리 집합으로 저장
+            cur_box = []
 
-    for rect in rectangle:
-        for i in range(rect[0] + 1, rect[2]):
-            for j in range(rect[1] + 1, rect[3]):
-                matrix[i][j] = 2
+            # 현재 테두리 위에 있는 직사각형 저장
+            for rect in rectangle:
+                if next_loc[0] in [rect[0], rect[2]] and next_loc[1] in range(rect[1], rect[3] + 1) or\
+                    next_loc[0] in range(rect[0], rect[2] + 1) and next_loc[1] in [rect[1], rect[3]]:
+                    cur_box.append(rect)
+                else:
+                    continue
 
-    # BFS 탐색 시작
-    item = (itemX, itemY)
-    queue = deque((characterX, characterY))
+            if len(cur_box) == 0:
+                continue
 
-    while queue[0] != item:
-        cur_loc = queue[0]
+            # 그 외에 다른 상자 내부에 있나 확인
+            for r in rectangle:
+                if r not in cur_box:
+                    if next_loc[0] in range(r[0] + 1, r[2]) or next_loc[1] in range(r[1] + 1, r[3]):
+                        break
+                    else:
+                        continue
+            else:
+                queue.append([next_loc, level + 1])
 
-        for i in range(size):
-            if cur_loc in outlines[i]:
-                for k in range(4):
-                    next_loc = (cur_loc[0] + di[k], cur_loc[1] + dj[k])
-
-                    if next_loc in outlines[i] and matrix[next_loc[0]][next_loc[1]] == 1:
-
-
-
-
-    return cnt
+    return level
 
 
 print(solution([[1, 1, 7, 4], [3, 2, 5, 5], [4, 3, 6, 9], [2, 6, 8, 8]], 1, 3, 7, 8))     # 17
