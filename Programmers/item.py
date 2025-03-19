@@ -1,13 +1,18 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/87694
 
 '''
-1. 좌표가 소속된 사각형의 루트를 따라 이동함
-2. 만약 사각형끼리 중첩되는 지점에 도착하면 방향을 수직으로 전환, 이때 다음 선택지가 1인 경우을 선택
+BFS 활용
+1. 내 현재 좌표가 어떤 사각형의 테두리 위에 있는지 확인.
+2. 델타 탐색을 통해 해당 사각형의 테두리 중에 이동 가능한 경우로 이동
+3. 만약 해당 좌표값이 2 (사각형 내부의 값) 이 되거나 양옆이 2라면 제거
 '''
+
+from collections import deque
 
 
 def solution(rectangle, characterX, characterY, itemX, itemY):
     cnt = 0
+    size = len(rectangle)
 
     # matrix 크기 정하기
     bound_i = []
@@ -19,7 +24,7 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
     matrix = [[0] * (max(bound_j) + 2) for _ in range(max(bound_i) + 2)]
 
     # 직사각형 색칠하기 (테두리는 1, 내부는 2)
-    idx = 1
+    outlines = []
     for rect in rectangle:
         route = set()
         for i in [rect[0], rect[2]]:
@@ -32,17 +37,29 @@ def solution(rectangle, characterX, characterY, itemX, itemY):
                 matrix[i][j] = 1
                 route.add((i, j))
 
-
+        outlines.append(route)             # 각 직사각형의 테두리 집합으로 저장
 
     for rect in rectangle:
         for i in range(rect[0] + 1, rect[2]):
             for j in range(rect[1] + 1, rect[3]):
                 matrix[i][j] = 2
 
-    print(matrix)
-    origin = [characterX, characterY]
-    cur_loc = [characterX, characterY]
-    item_loc = [itemX, itemY]
+    # BFS 탐색 시작
+    item = (itemX, itemY)
+    queue = deque((characterX, characterY))
+
+    while queue[0] != item:
+        cur_loc = queue[0]
+
+        for i in range(size):
+            if cur_loc in outlines[i]:
+                for k in range(4):
+                    next_loc = (cur_loc[0] + di[k], cur_loc[1] + dj[k])
+
+                    if next_loc in outlines[i] and matrix[next_loc[0]][next_loc[1]] == 1:
+
+
+
 
     return cnt
 
