@@ -3,5 +3,10 @@
 #     matrix = [list(map(int, input().split())) for _ in range(N)]
 
 dict = {1: 2, 3: 4}
-dict[1].append(6)
+i = 1
+while dict:
+    print(dict.pop(i))
+    i += 2
 print(dict)
+
+print(list(range(-10, 11)))
