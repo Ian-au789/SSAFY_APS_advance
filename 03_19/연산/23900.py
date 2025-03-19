@@ -7,26 +7,26 @@ from collections import deque
 
 def bfs(start, end):
     queue = deque([(start, 0)])
-    check = {start}
+
     while 1:
         if queue[0][0] == end:
             return queue[0][1]
         else:
-            if queue[0][0] < end and queue[0][0] + 1 not in check:
+            if queue[0][0] < end and not visited[queue[0][0] + 1]:
                 queue.append((queue[0][0] + 1, queue[0][1] + 1))
-                check.add(queue[0][0] + 1)
+                visited[queue[0][0] + 1] = 1
 
-            if queue[0][0] - 1 > 0 and queue[0][0] - 1 not in check:
+            if queue[0][0] - 1 > 0 and not visited[queue[0][0] - 1]:
                 queue.append((queue[0][0] - 1, queue[0][1] + 1))
-                check.add(queue[0][0] - 1)
+                visited[queue[0][0] - 1] = 1
 
-            if queue[0][0] < end and queue[0][0] * 2 not in check:
+            if queue[0][0] < end and not visited[queue[0][0] * 2]:
                 queue.append((queue[0][0] * 2, queue[0][1] + 1))
-                check.add(queue[0][0] * 2)
+                visited[queue[0][0] * 2] = 1
 
-            if queue[0][0] - 10 > 0 and queue[0][0] - 10 not in check:
+            if queue[0][0] - 10 > 0 and not visited[queue[0][0] - 10]:
                 queue.append((queue[0][0] - 10, queue[0][1] + 1))
-                check.add(queue[0][0] - 10)
+                visited[queue[0][0] - 10] = 1
 
             queue.popleft()
 
@@ -34,5 +34,5 @@ def bfs(start, end):
 T = int(input())
 for t in range(1, T+1):
     N, M = map(int, input().split())
-
+    visited = [0] * 2 * M
     print(f"#{t} {bfs(N, M)}")
