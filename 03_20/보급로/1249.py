@@ -2,34 +2,39 @@
 
 import sys
 sys.stdin = open("input.txt")
+import heapq
 
 
-def dfs(cur_loc, goal, time):
-    global result
+def dijkstra():
+    pq = [(0, 0, 0)]
+    dists = [[1e9] * N for _ in range(N)]
+    dists[0][0] = 0  # 시작점 거리 0
+    directions = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
-    time += matrix[cur_loc[0]][cur_loc[1]]
+    while pq:
+        dist, ci, cj = heapq.heappop(pq)
 
-    if cur_loc == goal:
-        result = min(result, time)
+        if dist > dists[ci][cj]:
+            continue
 
-    if time >= result:
-        return
+        for di, dj in directions:
+            ni, nj = ci + di, cj + dj
 
-    for k in range(2):
-        next_loc = (cur_loc[0] + di[k], cur_loc[1] + dj[k])
+            if 0 <= ni < N and 0 <= nj < N:
+                cost = matrix[ni][nj]
+                new_dist = dist + cost
 
-        if 0 <= next_loc[0] < N and 0 <= next_loc[1] < N:
-            dfs(next_loc, goal, time)
+                if dists[ni][nj] > new_dist:
+                    dists[ni][nj] = new_dist
+                    heapq.heappush(pq, (new_dist, ni, nj))
+
+    return dists[N-1][N-1]
 
 
 T = int(input())
-for t in range(1, T+1):
+for t in range(1, T + 1):
     N = int(input())
     matrix = [list(map(int, input())) for _ in range(N)]
 
-    di = [1, 0]
-    dj = [0, 1]
-    result = 1e9
-
-    dfs((0, 0), (N-1, N-1), 0)
+    result = dijkstra()
     print(f"#{t} {result}")
