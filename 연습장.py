@@ -20,39 +20,23 @@ set_dict['fruits'].add('apple')
 print(set_dict['fruits'])  # 출력: {'apple', 'banana'}
 
 
-import heapq
+def floyd_warshall(graph):
+    v_len = len(graph)     # 그래프의 정점 수
+    dist = [[1e9] * v_len for _ in range(v_len)]       # 거리 행렬
 
+    for i in range(v_len):
+        dist[i][i] = 0              # 자기 자신으로의 거리는 0
 
-def dijkstra(start_node):
-    pq = [(0, start_node)]
-    dists = [MAX] * V
-    dists[start_node] = 0
+    for u in range(v_len):
+        for v in range(v_len):
+            if graph[u][v] != 0:
+                dist[u][v] = graph[u][v]    # 인접 행렬사이의 거리로 업데이트
 
-    while pq:
-        dist, node = heapq.heappop(pq)
+    # 가능한 모든 시작점, 경유 루트, 도착점의 경우를 탐색하면서 최단 경로 갱신
+    for k in range(v_len):
+        for i in range(v_len):
+            for j in range(v_len):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
 
-        if dists[node] < dist:      # 이미 더 작은 경로가 존재한다면 pass
-            continue
-
-        for next_info in graph[node]:
-            next_dist = next_info[0]
-            next_node = next_info[1]
-
-            new_dist = dist + next_dist
-
-            if dists[next_node] <= new_dist:
-                continue
-            else:
-                dists[next_node] = new_dist
-                heapq.heappush(pq, (new_dist, next_node))
-
-
-MAX = 1e9
-
-V, E = map(int, input().split())
-start_node = 0
-graph = [[] for _ in range(V)]
-
-for _ in range(E):
-    u, v, w = map(int, input().split())
-    graph[u].append((w, v))           # 단방향 그래프
+    return dist      # 모든 정점 사이의 최단거리가 반영된 행렬
