@@ -1,14 +1,7 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/389480
 
-'''
-1. 도둑이 물건 n을 훔치면 A는 info[n][0], B는 info[n][1] 만큼 흔적
-2. 누적된 흔적의 합계가 각각 m, n 이상이면 검거
-3. 잡히지않고 모든 물건을 훔치는 경우, A가 남기는 누적 개수의 최솟값 return.
-4. 검거되지 않고 모든 물건을 훔치기 불가능하면 -1 return
-점화식 : dp_a[i][j + a_trace] = min(dp_a[i - 1][j + a_trace], dp_a[i-1][j] + a_trace)
-'''
 
-
+# BFS 완전탐색은 당연히 모든 경우를 찾을 수 있지만 시간복잡도가 2^N으로 겁나 오래걸림
 from collections import deque
 
 
@@ -43,6 +36,7 @@ def bfs(info, n, m):
     return result
 
 
+# DP를 쓰면 시간복잡도가 N*M으로 순식간에 해결
 def solution(info, n, m):
     size = len(info)
     dp = [[1000] * m for _ in range(size)]
