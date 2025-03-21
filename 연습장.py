@@ -18,3 +18,8 @@ set_dict['fruits'].add('apple')
 set_dict['fruits'].add('banana')
 set_dict['fruits'].add('apple')
 print(set_dict['fruits'])  # 출력: {'apple', 'banana'}
+
+bans = ["gqk", "kdn", "jxj", "jxi", "fug", "jxg", "ewq", "len", "bhc"]
+bans2 = ["a", "aa", "ab", "aaa", "aca", "aba"]
+bans2.sort(key=lambda x: (len(x), x))
+print(bans2)
