@@ -34,16 +34,17 @@ for t in range(1, T+1):
         turned_on = [0]*n
         top = 0
 
+        # 가장 많은 전구를 끌 수 있는 스위치를 찾아서 누르는 탐욕 방식
         for idx in range(n):
             turned_on[idx] = sum(matrix[idx])
             if turned_on[idx] > turned_on[top]:
                 top = idx
 
-        if sum(turned_on) == 0:
+        if sum(turned_on) == 0:   # 모든 전구가 꺼졌으면 종료
             c = 0
             break
         else:
-            if top == last:
+            if top == last:    # 만약 직전에 눌렀던 스위치를 또 누른다면 무한루프에 빠지고 모든 전구를 끌 수 없다.
                 c = 1
                 break
 
