@@ -1,4 +1,7 @@
 # https://www.acmicpc.net/problem/1949
+
+# 트리에서 DP를 다루는 방법을 알아야 함
+
 from collections import defaultdict
 
 def best_village():
