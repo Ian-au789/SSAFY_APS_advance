@@ -1,11 +1,15 @@
 # https://www.acmicpc.net/problem/1949
 
-# 트리에서 DP를 다루는 방법을 알아야 함
+# 트리에서 DP를 다루는 방법을 알아야 함, 특정 노드를 부모노드로 가지는 자식 노드의 값을 업데이트하는 형식
 
 from collections import defaultdict
 
-def best_village():
-    pass
+def best_village(num):
+    for next_num in graph[num]:
+        if visited[next_num-1]:
+            continue
+
+        else:
 
 
 N = 7
@@ -15,5 +19,9 @@ graph = defaultdict(set)
 for e in edges:
     graph[e[0]].add(e[1])
     graph[e[1]].add(e[0])
+
+visited = [0]*N
+
+result = best_village(1)
 
 print(graph)
