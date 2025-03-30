@@ -9,8 +9,6 @@ def best_village(num):
         if visited[next_num-1]:
             continue
 
-        else:
-
 
 N = 7
 population = [1000, 3000, 4000, 1000, 2000, 2000, 7000]
