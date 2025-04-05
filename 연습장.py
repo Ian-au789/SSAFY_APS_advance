@@ -23,3 +23,5 @@ bans = ["gqk", "kdn", "jxj", "jxi", "fug", "jxg", "ewq", "len", "bhc"]
 bans2 = ["a", "aa", "ab", "aaa", "aca", "aba"]
 bans2.sort(key=lambda x: (len(x), x))
 print(bans2)
+
+# tree, graph 와 DP의 결합
